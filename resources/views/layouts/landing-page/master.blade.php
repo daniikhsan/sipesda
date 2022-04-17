@@ -49,8 +49,9 @@
       font-size: 15px;
       margin-bottom: 0;
     }
-
   </style>
+
+  @stack('css')
 </head>
 
 <body>
@@ -109,11 +110,12 @@
   <script src="{{asset('template/landing-page/assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
   <script src="{{asset('template/landing-page/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
   <script src="{{asset('template/landing-page/assets/vendor/waypoints/noframework.waypoints.js')}}"></script>
-  <script src="{{asset('template/landing-page/assets/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{asset('template/landing-page/assets/js/main.js')}}"></script>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  @stack('js')
 </body>
 
 </html>
