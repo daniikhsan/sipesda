@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $title = 'Beranda';
+    return view('welcome',compact(['title']));
 });
 
 Auth::routes();
