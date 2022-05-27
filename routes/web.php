@@ -20,4 +20,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('admin', App\Http\Controllers\AdminController::class);
+    Route::resource('masyarakat', App\Http\Controllers\MasyarakatController::class);
+    Route::prefix('surat-keterangan')->group(function () {
+        Route::resource('domisili', App\Http\Controllers\SuratKeterangan\DomisiliController::class);
+    });
+});

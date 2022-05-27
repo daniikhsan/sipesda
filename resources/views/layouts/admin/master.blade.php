@@ -20,6 +20,9 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="{{ asset('template/admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -113,6 +116,8 @@
     <script src="{{ asset('template/admin/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('template/admin/js/demo/chart-pie-demo.js') }}"></script>
 
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('template/admin/js/demo/datatables-demo.js') }}"></script>
 </body>
 
 </html>

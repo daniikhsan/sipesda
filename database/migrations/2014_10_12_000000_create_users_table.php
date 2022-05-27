@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role',['super_admin','admin','masyarakat'])->default('masyarakat');
             $table->string('jabatan_perangkat_desa')->nullable();
+            $table->string('avatar')->default('template/img/user.png');
             $table->tinyInteger('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();
