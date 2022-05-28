@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function index()
     {
         $title = 'Admin';
-        $admins = User::where('role','admin')->orWhere('role','super_admin')->get();
+        $admins = User::where('role','admin')->orWhere('role','super_admin')->orderBy('created_at','desc')->get();
 
         return view('admin.index',[
             'title' => $title,

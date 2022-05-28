@@ -34,23 +34,16 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Formulir Edit Admin - {{ $user->penduduk->nama }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Formulir Edit Masyarakat - {{ $user->penduduk->nama }}</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.update', $user->id) }}" method="post">
+                <form action="{{ route('masyarakat.update', $user->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                         <label for="nik" class="form-label">NIK</label>
                         <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" value="{{ old('nik', $user->nik) }}" placeholder="Input NIK...">
                         @error('nik')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="nip" class="form-label">NIP</label>
-                        <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip', $user->nip) }}" placeholder="Input NIP...">
-                        @error('nip')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -65,13 +58,6 @@
                         <label for="nama" class="form-label">Nama</label>
                         <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama', $user->penduduk->nama) }}" placeholder="Input Nama...">
                         @error('nama')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="jabatan_perangkat_desa" class="form-label">Posisi</label>
-                        <input type="text" class="form-control @error('jabatan_perangkat_desa') is-invalid @enderror" id="jabatan_perangkat_desa" name="jabatan_perangkat_desa" value="{{ old('jabatan_perangkat_desa', $user->jabatan_perangkat_desa) }}" placeholder="Input Posisi...">
-                        @error('jabatan_perangkat_desa')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
