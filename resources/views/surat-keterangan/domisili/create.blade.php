@@ -141,8 +141,8 @@
                         @enderror
                     </div>
                     <div class="mb-3" id="input_nama_usaha" style="display:none;">
-                        <label for="nama_usaha" class="form-label">Nama Usaha</label>
-                        <input type="text" class="form-control @error('nama_usaha') is-invalid @enderror" id="nama_usaha" name="nama_usaha" value="{{ old('nama_usaha') }}" placeholder="Input Nama Usaha...">
+                        <label for="nama_usaha" class="form-label">Nama Usaha/Tempat</label>
+                        <input type="text" class="form-control @error('nama_usaha') is-invalid @enderror" id="nama_usaha" name="nama_usaha" value="{{ old('nama_usaha') }}" placeholder="Input Nama Usaha/Tempat...">
                         @error('nama_usaha')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror

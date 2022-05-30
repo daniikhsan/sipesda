@@ -27,5 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('masyarakat', App\Http\Controllers\MasyarakatController::class);
     Route::prefix('surat-keterangan')->group(function () {
         Route::resource('domisili', App\Http\Controllers\SuratKeterangan\DomisiliController::class);
+        Route::get('domisili/{id}/pdf', [App\Http\Controllers\SuratKeterangan\DomisiliController::class, 'export_pdf'])->name('domisili.export_pdf');
     });
 });

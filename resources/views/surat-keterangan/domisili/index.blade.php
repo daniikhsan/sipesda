@@ -78,12 +78,12 @@
                                 @endif
                             </td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($domisili->created_at)->format('d M Y H:i:s') }}</td>
-                            <td class="text-center" width="300px">
+                            <td class="text-center" width="400px">
                                 <div class="btn btn-toolbar justify-content-center">
                                     <a href="{{ route('domisili.edit', $domisili->id) }}" class="btn btn-success btn-sm mr-2 {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}"><i class="fas fa-redo"></i> Update Status</a>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
                                         <i class="fas fa-eye"></i> Detail
-                                    </button>
+                                    </button><br>
                                     <a href="{{ route('domisili.edit', $domisili->id) }}" class="btn btn-primary btn-sm mr-2 {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}"><i class="fas fa-pen"></i> Edit</a>
                                     <form action="{{ route('domisili.destroy', $domisili->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                         @csrf
@@ -98,14 +98,16 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModal-{{ $domisili->id }}Label">470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG -- {{ $domisili->status }}</h5>
+                                <h5 class="modal-title" id="exampleModal-{{ $domisili->id }}Label">470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG | {{ $domisili->status }}</h5>
+                                <br>
+                                
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div class="mb-1">
                                             <small>No. Surat</small>
                                             <p>470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
@@ -240,10 +242,14 @@
                                             </div>
                                         @endif
                                     </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ route('domisili.export_pdf', $domisili->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Cetak Surat</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                
+                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                             </div>
                         </div>

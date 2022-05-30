@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SuratKeterangan;
 
+use Barryvdh\DomPDF\Facade\PDF;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -259,5 +260,14 @@ class DomisiliController extends Controller
         $domisili->delete();
 
         return redirect()->route('domisili.index')->with('success', 'Domisili telah berhasil dihapus.');
+    }
+
+    public function export_pdf($id){
+        $domisili = Domisili::findOrFail($id);
+
+        $pdf = PDF::loadView('surat-keterangan.domisili.pdf.' . strtolower($domisili->jenis_domisili),['domisili' => $domisili]);
+        // return $pdf;
+    	return $pdf->stream();
+        // return view('surat-keterangan.domisili.pdf');
     }
 }
