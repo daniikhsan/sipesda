@@ -184,7 +184,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-success float-right"><i class="fas fa-save mr-2"></i> Submit</button>
+                    <button type="submit" class="btn btn-success float-right"><i class="fas fa-save mr-2"></i> Save</button>
                 </form>
             </div>
         </div>

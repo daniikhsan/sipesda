@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ $title }} | {{ env('APP_NAME') }} - {{ env('VILLAGE_NAME') }}</title>
+    <title>{{ $title }} | SIPESDA - Desa Giri Mukti</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -59,7 +59,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <strong><span>{{ env('APP_NAME') }}</span></strong> {{ env('VILLAGE_NAME') }} {{ date('Y')}}</span>
+                        <span>Copyright &copy; <strong><span>SIPESDA</span></strong> Desa Giri Mukti {{ date('Y')}}</span>
                     </div>
                 </div>
             </footer>
@@ -113,8 +113,8 @@
     <script src="{{ asset('template/admin/vendor/chart.js/Chart.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('template/admin/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('template/admin/js/demo/chart-pie-demo.js') }}"></script>
+    <!-- <script src="{{ asset('template/admin/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('template/admin/js/demo/chart-pie-demo.js') }}"></script> -->
 
 
     <!-- Page level plugins -->

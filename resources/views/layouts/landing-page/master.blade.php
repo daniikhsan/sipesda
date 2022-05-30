@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{{ $title }} | {{ env('APP_NAME') }} - {{ env('VILLAGE_NAME') }}</title>
-  <meta content="{{ env('VILLAGE_NAME') }} {{ env('VILLAGE_DISTRICT') }}  {{ env('VILLAGE_CITY') }}" name="description">
+  <title>{{ $title }} | SIPESDA - Desa Giri Mukti</title>
+  <meta content="Desa Giri Mukti Penajam  Penajam Paser Utara" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
@@ -60,9 +60,9 @@
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 			<h1 class="logo">
-				<a href="#">{{ env('APP_NAME') }}</a><br>
+				<a href="#">SIPESDA</a><br>
 				<p class="logo-description"><i>{{ env('APP_DESC') }}</i></p>
-        <p class="logo-description"><i>{{ env('VILLAGE_NAME') }} {{ env('VILLAGE_CITY') }}</i></p>
+        <p class="logo-description"><i>Desa Giri Mukti Penajam Paser Utara</i></p>
 			</h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="#" class="logo"><img src="assets/img/logo.png" alt=""></a> -->
@@ -87,7 +87,7 @@
   <footer id="footer">
     <div class="container py-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>{{ env('APP_NAME') }}</span></strong> {{ env('VILLAGE_NAME') }}. All Rights Reserved
+        &copy; Copyright <strong><span>SIPESDA</span></strong> Desa Giri Mukti. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->

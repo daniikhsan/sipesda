@@ -17,7 +17,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Masyarakat Terdaftar</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_masyarakat }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -34,8 +34,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Pengajuan SK Domisili</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                            Permohonan SK Domisili</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_permohonan_sk_domisili }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-paste fa-2x text-gray-300"></i>
@@ -53,7 +53,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             SK Domisili (Pengajuan)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_pengajuan_sk_domisili }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-sticky-note fa-2x text-gray-300"></i>
@@ -71,7 +71,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             SK Domisili (Proses)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_proses_sk_domisili }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-paper-plane fa-2x text-gray-300"></i>
@@ -118,13 +118,16 @@
                 </div>
                 <div class="mt-4 text-center small">
                     <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Direct
+                        <i class="fas fa-circle text-primary"></i> Persyaratan
                     </span>
                     <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
+                        <i class="fas fa-circle text-success"></i> Penduduk
                     </span>
                     <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
+                        <i class="fas fa-circle text-info"></i> Usaha
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-light"></i> Lainnya
                     </span>
                 </div>
             </div>
@@ -136,6 +139,7 @@
 
 @push('script')
 <script>
+
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
@@ -165,6 +169,12 @@
     return s.join(dec);
     }
 
+    let total_sk_domisili = '{{ json_encode($total_sk_domisili) }}'
+
+    total_sk_domisili = total_sk_domisili.replace('[',"")
+    total_sk_domisili = total_sk_domisili.replace(']',"")
+    total_sk_domisili = total_sk_domisili.split(',')
+
     // Area Chart Example
     var ctx = document.getElementById("myAreaChart");
     var myLineChart = new Chart(ctx, {
@@ -184,7 +194,7 @@
         pointHoverBorderColor: "rgba(78, 115, 223, 1)",
         pointHitRadius: 10,
         pointBorderWidth: 2,
-        data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+        data: total_sk_domisili,
         }],
     },
     options: {
@@ -258,18 +268,31 @@
 </script>
 
 <script>
+    
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
+
+    let label_jenis_sk_domisili = '{{ $label_jenis_sk_domisili }}'
+    let data_jenis_sk_domisili = '{{ $data_jenis_sk_domisili }}'
+
+    data_jenis_sk_domisili = data_jenis_sk_domisili.replace('[',"")
+    data_jenis_sk_domisili = data_jenis_sk_domisili.replace(']',"")
+    data_jenis_sk_domisili = data_jenis_sk_domisili.split(',')
+
+    label_jenis_sk_domisili = label_jenis_sk_domisili.replaceAll('&quot;',"")
+    label_jenis_sk_domisili = label_jenis_sk_domisili.replace('[',"")
+    label_jenis_sk_domisili = label_jenis_sk_domisili.replace(']',"")
+    label_jenis_sk_domisili = label_jenis_sk_domisili.split(',')
 
     // Pie Chart Example
     var ctx = document.getElementById("myPieChart");
     var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ["Direct", "Referral", "Social"],
+        labels: label_jenis_sk_domisili,
         datasets: [{
-        data: [55, 30, 15],
+        data: data_jenis_sk_domisili,
         backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
         hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
         hoverBorderColor: "rgba(234, 236, 244, 1)",

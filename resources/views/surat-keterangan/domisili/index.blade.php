@@ -5,10 +5,10 @@
 <div class="row">
     <div class="col-md-8">
         <h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
-        <p>Halaman untuk mengolah data domisili</p>
+        <p>Halaman untuk mengolah data Surat Keterangan Domisili</p>
     </div>
     <div class="col-md-4">
-        <a href="{{ route('domisili.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-plus fa-sm text-white-50"></i> Tambah domisili</a>
+        <a href="{{ route('domisili.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-plus fa-sm text-white-50"></i> Tambah Pengajuan</a>
     </div>
 </div>
 

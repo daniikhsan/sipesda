@@ -41,7 +41,7 @@
                 <thead>
                     <tr class="text-center">
                         <th width="15px">No</th>
-                        <th>NIP</th>
+                        <th>NIK</th>
                         <th>Nama</th>
                         <th>Posisi</th>
                         <th>Aksi</th>
@@ -50,7 +50,7 @@
                 <tfoot>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>NIP</th>
+                        <th>NIK</th>
                         <th>Nama</th>
                         <th>Posisi</th>
                         <th>Aksi</th>
@@ -60,7 +60,7 @@
                     @foreach($masyarakat as $masyarakat)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $masyarakat->nip ? $masyarakat->nip : '-' }}</td>
+                            <td class="text-center">{{ $masyarakat->nik ? $masyarakat->nik : '-' }}</td>
                             <td>{{ $masyarakat->penduduk->nama }}</td>
                             <td class="text-center">{{ $masyarakat->jabatan_perangkat_desa ? $masyarakat->jabatan_perangkat_desa : '-' }}</td>
                             <td class="text-center" width="300px">

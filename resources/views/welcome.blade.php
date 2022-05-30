@@ -4,9 +4,9 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
   <div class="container" data-aos="zoom-out" data-aos-delay="100">
-    <h1><span>{{ env('APP_NAME') }}</span></h1>
-    <h2>{{ env('APP_DESC') }} {{ env('VILLAGE_NAME') }}</h2>
-    <h2 style="margin-bottom: 15px !important;">Kec.{{ env('VILLAGE_DISTRICT') }} Kab.{{ env('VILLAGE_CITY') }}</h2>
+    <h1><span>Desa Giri Mukti</span></h1>
+    <h2>Sistem Informasi Pelayanan Surat Keterangan Domisili Desa Giri Mukti</h2>
+    <h2 style="margin-bottom: 15px !important;">Kec.Penajam Kab.Penajam Paser Utara</h2>
     <div class="d-flex">
       <a href="#" class="btn-get-started scrollto">Ajukan Surat Domisili</a>
     </div>
@@ -24,7 +24,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 text-center" style="padding-bottom: 15px;">
-          <p><i>{{ env('APP_DESC') }} ({{ env('APP_NAME') }})</i> merupakan perangkat lunak berbasis web yang memberikan pelayanan Administrasi berupa Surat Keterangan Domisili di {{ env('VILLAGE_NAME') }} Kec.{{ env('VILLAGE_DISTRICT') }} Kab.{{ env('VILLAGE_CITY') }}</p>
+          <p><i>Sistem Informasi Pelayanan Surat Keterangan Domisili (Desa Giri Mukti)</i> merupakan perangkat lunak berbasis web yang memberikan pelayanan Administrasi berupa Surat Keterangan Domisili di Desa Giri Mukti Kec.Penajam Kab.Penajam Paser Utara</p>
         </div>
       </div>
 
