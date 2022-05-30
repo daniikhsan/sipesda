@@ -80,7 +80,7 @@
                             <td class="text-center">{{ \Carbon\Carbon::parse($domisili->created_at)->format('d M Y H:i:s') }}</td>
                             <td class="text-center" width="400px">
                                 <div class="btn btn-toolbar justify-content-center">
-                                    <a href="{{ route('domisili.edit', $domisili->id) }}" class="btn btn-success btn-sm mr-2 {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}"><i class="fas fa-redo"></i> Update Status</a>
+                                    <a href="{{ route('domisili.edit_status', $domisili->id) }}" class="btn btn-success btn-sm mr-2 {{ $domisili->status == 'Selesai' || $domisili->status == 'Dibatalkan'  ? 'disabled' : '' }}"><i class="fas fa-redo"></i> Update Status</a>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
                                         <i class="fas fa-eye"></i> Detail
                                     </button><br>
@@ -88,7 +88,7 @@
                                     <form action="{{ route('domisili.destroy', $domisili->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}"><i class="fas fa-trash"></i> Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}" {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}><i class="fas fa-trash"></i> Delete</button>
                                     </form>
                                 </div>
                             </td>

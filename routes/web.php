@@ -28,5 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('surat-keterangan')->group(function () {
         Route::resource('domisili', App\Http\Controllers\SuratKeterangan\DomisiliController::class);
         Route::get('domisili/{id}/pdf', [App\Http\Controllers\SuratKeterangan\DomisiliController::class, 'export_pdf'])->name('domisili.export_pdf');
+        Route::get('domisili/{id}/edit-status', [App\Http\Controllers\SuratKeterangan\DomisiliController::class, 'edit_status'])->name('domisili.edit_status');
+        Route::patch('domisili/{id}/update-status', [App\Http\Controllers\SuratKeterangan\DomisiliController::class, 'update_status'])->name('domisili.update_status');
     });
 });

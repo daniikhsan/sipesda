@@ -270,4 +270,25 @@ class DomisiliController extends Controller
     	return $pdf->stream();
         // return view('surat-keterangan.domisili.pdf');
     }
+
+    public function edit_status($id){
+        $sk_domisili = Domisili::findOrFail($id);
+        $title = 'Edit Status Surat Keterangan Domisili';
+
+        return view('surat-keterangan.domisili.edit_status',[
+            'title' => $title,
+            'sk_domisili' => $sk_domisili,
+        ]);
+    }
+
+    public function update_status(Request $request, $id){
+        $sk_domisili = Domisili::findOrFail($id);
+        try {
+            $sk_domisili->status = $request->status;
+            $sk_domisili->update();
+            return redirect()->route('domisili.index')->with('success', 'Status Pengajuan Surat Keterangan Domisili telah berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            return redirect()->route('domisili.edit_status', $id)->with('error', 'Status Pengajuan Surat Keterangan Domisili gagal diperbarui. '. $th->getMessage());
+        }
+    }
 }

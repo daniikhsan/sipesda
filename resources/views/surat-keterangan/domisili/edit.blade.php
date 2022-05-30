@@ -177,6 +177,7 @@
                             <option value="Diproses" {{ old('status', $sk_domisili->status) == 'Diproses' ? 'selected' : '' }}>Diproses</option>
                             <option value="Perbaikan" {{ old('status', $sk_domisili->status) == 'Perbaikan' ? 'selected' : '' }}>Perbaikan</option>
                             <option value="Selesai" {{ old('status', $sk_domisili->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="Dibatalkan" {{ old('status', $sk_domisili->status) == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
                         </select>
                         @error('status')
                             <small class="text-danger">{{ $message }}</small>
