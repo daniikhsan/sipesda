@@ -22,6 +22,11 @@ Auth::routes();
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/user/settings',[App\Http\Controllers\HomeController::class, 'settings'])->name('user.settings');
+    Route::post('/user/settings',[App\Http\Controllers\HomeController::class, 'update_settings'])->name('user.update_settings');
+    Route::get('/user/settings/password',[App\Http\Controllers\HomeController::class, 'settings_password'])->name('user.settings_password');
+    Route::post('/user/settings/password',[App\Http\Controllers\HomeController::class, 'update_settings_password'])->name('user.update_settings_password');
+
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('admin', App\Http\Controllers\AdminController::class);
     Route::resource('masyarakat', App\Http\Controllers\MasyarakatController::class);

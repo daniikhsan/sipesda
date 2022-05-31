@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Rules\MatchOldPassword;
 use App\Models\User;
 use App\Models\SuratKeterangan\Domisili;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -72,5 +75,83 @@ class HomeController extends Controller
             $title = 'Dashboard';
             return view('home',compact('title'));
         }
+    }
+
+    public function settings(){
+        $title = 'Profile';
+        $user = User::findOrFail(auth()->user()->id);
+        // dd($title);
+        return view('user.settings',[
+            'title'=> $title,
+            'user'=> $user,
+        ]);
+    }
+
+    public function update_settings(Request $request){
+        $user = User::findOrFail(auth()->user()->id);
+
+        DB::beginTransaction();
+        try {
+            $penduduk = $user->penduduk;
+            $penduduk->nik = $request->nik;
+            $penduduk->no_kk = $request->no_kk;
+            $penduduk->nama = $request->nama;
+            $penduduk->jenis_kelamin = $request->jenis_kelamin;
+            $penduduk->tempat_lahir = $request->tempat_lahir;
+            $penduduk->tanggal_lahir = $request->tanggal_lahir;
+            $penduduk->status_perkawinan = $request->status_perkawinan;
+            $penduduk->pendidikan = $request->pendidikan;
+            $penduduk->alamat = $request->alamat;
+            $penduduk->agama = $request->agama;
+            $penduduk->pekerjaan = $request->pekerjaan;
+            $penduduk->update();
+
+            if($request->hasFile('avatar')){
+                $avatar = $request->file('avatar');
+                $avatar_name = $request->nik . ' - ' . $avatar->getClientOriginalName();
+                $avatar->move(public_path('/avatars'),$avatar_name);
+
+                $avatar_path = 'avatars/' . $avatar_name;
+            }
+
+            $user->nik = $request->nik;
+            $user->email = $request->email;
+            $user->avatar = $avatar_path;
+            $user->update();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Profile telah berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Profile gagal diperbarui. ' . $th->getMessage());
+        }
+    }
+    
+    public function settings_password(){
+        $title = 'Ganti Password';
+        // dd($title);
+        return view('user.settings_password',[
+            'title'=> $title,
+        ]);
+    }
+    
+    public function update_settings_password(Request $request){
+        $this->validate($request,[
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ],[
+            'new_confirm_password.same' => 'Password Baru dan Konfirmasi Password Baru harus sama.'
+        ]);
+        
+        try {
+            $user = User::find(auth()->user()->id);
+            $user->password = Hash::make($request->new_password);
+            $user->update();
+            return redirect()->back()->with('success', 'Password telah berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Password gagal diperbarui. ' . $th->getMessage());
+        }
+
     }
 }
