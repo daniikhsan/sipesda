@@ -15,16 +15,16 @@
             <span>Dashboard</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Penduduk dan User
-    </div>
-
+    
+    
     <!-- Nav Item - Admin -->
     @if(auth()->user()->role == 'super_admin')
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Penduduk dan User
+        </div>
         <li class="nav-item {{ Route::is('admin.*') ? 'active' : '' }}">
             <a class="nav-link collapsed {{ Route::is('admin.*') ? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#admin"
                 aria-expanded="true" aria-controls="admin">

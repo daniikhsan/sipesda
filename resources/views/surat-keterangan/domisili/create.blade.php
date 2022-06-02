@@ -37,7 +37,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Formulir Tambah Surat Keterangan Domisili</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('domisili.store') }}" method="post">
+                <form action="{{ route('domisili.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="jenis_domisili" class="form-label">Jenis Surat Keterangan Domisili</label>
@@ -168,6 +168,7 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    @if(auth()->user()->role == 'super_admin' || auth()->user()->role == 'super_admin')
                     <div class="mb-3">
                         <label for="status" class="form-label">Status Surat</label>
                         <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
@@ -182,7 +183,41 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-
+                    @else
+                        <div class="mb-3">
+                            <label for="berkas" class="form-label">Berkas</label>
+                            <input type="file" name="berkas" id="berkas" class="form-control @error('berkas') is-invalid @enderror" required>
+                            <small><a href="#exampleModal" data-toggle="modal" data-target="#exampleModal">Berkas yang diperlukan</a></small>
+                            @error('berkas')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Berkas</h5>
+                                            <br>
+                                            
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Berikut adalah berkas yang diperlukan :</p>
+                                            <p>1. Foto KTP</p>
+                                            <p>2. Foto Surat Usaha</p>
+                                            <p>3. Dll</p>
+                                            <p>Semua berkas tersebut disimpan/dikompress dalam satu file dengan extension '.rar' atau '.zip'</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <button type="submit" class="btn btn-success float-right"><i class="fas fa-save mr-2"></i> Submit</button>
                 </form>
             </div>
@@ -193,6 +228,8 @@
 
 @push('script')
 <script>
+    let is_Penduduk = '{{ auth()->user()->role == "masyarakat" ? 1 : 0 }}'
+    console.log(is_Penduduk)
     let jenis_domisili = $('#jenis_domisili');
     let input_nik = $('#input_nik');
     let input_nama = $('#input_nama');
@@ -224,6 +261,24 @@
     let status_perkawinan = $('#status_perkawinan');
     let keterangan = $('#keterangan');
     
+    function pendudukBioInput(){
+        nik.val('{{ auth()->user()->nik }}')
+        nama.val('{{ auth()->user()->penduduk->nama }}')
+        tempat_tanggal_lahir.val('{{ auth()->user()->penduduk->tempat_lahir }}, {{ auth()->user()->penduduk->tanggal_lahir }}')
+        jenis_kelamin.val('{{ auth()->user()->penduduk->jenis_kelamin }}')
+        agama.val('{{ auth()->user()->penduduk->agama }}')
+        pekerjaan.val('{{ auth()->user()->penduduk->pekerjaan }}')
+        status_perkawinan.val('{{ auth()->user()->penduduk->status_perkawinan }}')
+
+        nik.attr('readonly','true')
+        nama.attr('readonly','true')
+        tempat_tanggal_lahir.attr('readonly','true')
+        jenis_kelamin.attr('readonly','true')
+        agama.attr('readonly','true')
+        pekerjaan.attr('readonly','true')
+        status_perkawinan.attr('readonly','true')
+    }
+
     function removeValueAllInput(){
         nik.val('')
         nama.val('')
@@ -377,6 +432,10 @@
             UsahaForm()
         }else{
             LainnyaForm()
+        }
+
+        if(is_Penduduk == 1){
+            pendudukBioInput()
         }
     });
 </script>

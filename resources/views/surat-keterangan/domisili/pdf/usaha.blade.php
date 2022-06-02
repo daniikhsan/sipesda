@@ -43,7 +43,7 @@
         </table>
         <hr style="border: 2px solid black; margin-top:0; margin-bottom: 20px;">
         <p class="text-center" style="font-size: 18px;"><b><u>SURAT KETERANGAN DOMISILI</u></b></p>
-        <p class="text-center" style="font-size: 17px; margin-bottom: 35px;">Nomor : 470/06/Pem-DG</p>
+        <p class="text-center" style="font-size: 17px; margin-bottom: 35px;">Nomor : 470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
 
         
     </center>

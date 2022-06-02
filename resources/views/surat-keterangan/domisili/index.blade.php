@@ -33,7 +33,7 @@
 <!-- DataTales domisili -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List domisili</h6>
+        <h6 class="m-0 font-weight-bold text-primary">List Domisili</h6>
     </div>
     <div class="card-body">
         <div class="table table-responsive">
@@ -45,7 +45,7 @@
                         <th>Pemohon</th>
                         <th>Status</th>
                         <th>Diajukan</th>
-                        <th width="400px">Aksi</th>
+                        <th @if(auth()->user()->role != 'masyarakat') width="400px" @else width="300px" @endif>Aksi</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -55,7 +55,7 @@
                         <th>Pemohon</th>
                         <th>Status</th>
                         <th>Diajukan</th>
-                        <th width="400px">Aksi</th>
+                        <th @if(auth()->user()->role != 'masyarakat') width="400px" @else width="300px" @endif>Aksi</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -78,8 +78,14 @@
                                 @endif
                             </td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($domisili->created_at)->format('d M Y H:i:s') }}</td>
-                            <td class="text-center" width="400px">
+                            <td class="text-center" @if(auth()->user()->role != 'masyarakat') width="400px" @else width="300px" @endif>
                                 <div class="btn btn-toolbar justify-content-center">
+                                <a href="{{ url($domisili->berkas) }}" class="btn btn-sm btn-secondary  mr-2"><i class="fas fa-download"></i> Berkas</a>    
+                                <a href="{{ route('domisili.bukti_registrasi', $domisili->id) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Bukti Registrasi</a>    
+                                @if(auth()->user()->role != 'masyarakat')
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </button><br>
                                     <a href="{{ route('domisili.edit_status', $domisili->id) }}" class="btn btn-success btn-sm mr-2 {{ $domisili->status == 'Selesai' || $domisili->status == 'Dibatalkan'  ? 'disabled' : '' }}"><i class="fas fa-redo"></i> Update Status</a>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
                                         <i class="fas fa-eye"></i> Detail
@@ -90,169 +96,170 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}" {{ $domisili->status != 'Diajukan' ? 'disabled' : '' }}><i class="fas fa-trash"></i> Delete</button>
                                     </form>
+                                @endif
                                 </div>
                             </td>
                         </tr>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal-{{ $domisili->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModal-{{ $domisili->id }}Label" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModal-{{ $domisili->id }}Label">470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG | {{ $domisili->status }}</h5>
-                                <br>
-                                
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="mb-1">
-                                            <small>No. Surat</small>
-                                            <p>470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Status Surat</small>
-                                            <p>{{ $domisili->status }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>NIK</small>
-                                            <p>{{ $domisili->nik }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Nama</small>
-                                            <p>{{ $domisili->nama }}</p>
-                                        </div>
-                                        @if($domisili->jenis_domisili == 'Penduduk')
-                                        <div class="mb-1">
-                                            <small>Tempat, Tanggal Lahir</small>
-                                            <p>{{ $domisili->tempat_tanggal_lahir }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Jenis Kelamin</small>
-                                            <p>{{ $domisili->jenis_kelamin }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Agama</small>
-                                            <p>{{ $domisili->agama }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Status Perkawinan</small>
-                                            <p>{{ $domisili->status_perkawinan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Pekerjaan</small>
-                                            <p>{{ $domisili->pekerjaan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Asal</small>
-                                            <p>{{ $domisili->alamat_asal }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Domisili</small>
-                                            <p>{{ $domisili->alamat_domisili }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Masa Berlaku</small>
-                                            <p>{{ \Carbon\Carbon::parse($domisili->tanggal_berlaku)->format('d M Y') }}</p>
-                                        </div>
-                                        @elseif($domisili->jenis_domisili == 'Persyaratan')
-                                        <div class="mb-1">
-                                            <small>Tempat, Tanggal Lahir</small>
-                                            <p>{{ $domisili->tempat_tanggal_lahir }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Jenis Kelamin</small>
-                                            <p>{{ $domisili->jenis_kelamin }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Agama</small>
-                                            <p>{{ $domisili->agama }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Status Perkawinan</small>
-                                            <p>{{ $domisili->status_perkawinan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Pekerjaan</small>
-                                            <p>{{ $domisili->pekerjaan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Asal</small>
-                                            <p>{{ $domisili->alamat_asal }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Domisili</small>
-                                            <p>{{ $domisili->alamat_domisili }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Keterangan</small>
-                                            <p>{{ $domisili->keterangan }}</p>
-                                        </div>
-                                        @elseif($domisili->jenis_domisili == 'Usaha')
-                                        <div class="mb-1">
-                                            <small>Tempat, Tanggal Lahir</small>
-                                            <p>{{ $domisili->tempat_tanggal_lahir }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Jenis Kelamin</small>
-                                            <p>{{ $domisili->jenis_kelamin }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Agama</small>
-                                            <p>{{ $domisili->agama }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Status Perkawinan</small>
-                                            <p>{{ $domisili->status_perkawinan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Pekerjaan</small>
-                                            <p>{{ $domisili->pekerjaan }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Asal</small>
-                                            <p>{{ $domisili->alamat_asal }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Nama Usaha</small>
-                                            <p>{{ $domisili->nama_usaha }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Bidang Usaha</small>
-                                            <p>{{ $domisili->bidang_usaha }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Mulai Usaha</small>
-                                            <p>Tahun {{ \Carbon\Carbon::parse($domisili->mulai_usaha)->format('Y') }}</p>
-                                        </div>
-                                        <div class="mb-1">
-                                            <small>Alamat Domisili</small>
-                                            <p>{{ $domisili->alamat_domisili }}</p>
-                                        </div>
-                                        @else
-                                            <div class="mb-1">
-                                                <small>Nama Tempat/Usaha</small>
-                                                <p>{{ $domisili->nama_usaha }}</p>
-                                            </div>
-                                            <div class="mb-1">
-                                                <small>Alamat Domisili</small>
-                                                <p>{{ $domisili->alamat_domisili }}</p>
-                                            </div>
-                                        @endif
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModal-{{ $domisili->id }}Label">470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG | {{ $domisili->status }}</h5>
+                                        <br>
+                                        
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    <div class="col-md-4">
-                                        <a href="{{ route('domisili.export_pdf', $domisili->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Cetak Surat</a>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="mb-1">
+                                                    <small>No. Surat</small>
+                                                    <p>470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Status Surat</small>
+                                                    <p>{{ $domisili->status }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>NIK</small>
+                                                    <p>{{ $domisili->nik }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Nama</small>
+                                                    <p>{{ $domisili->nama }}</p>
+                                                </div>
+                                                @if($domisili->jenis_domisili == 'Penduduk')
+                                                <div class="mb-1">
+                                                    <small>Tempat, Tanggal Lahir</small>
+                                                    <p>{{ $domisili->tempat_tanggal_lahir }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Jenis Kelamin</small>
+                                                    <p>{{ $domisili->jenis_kelamin }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Agama</small>
+                                                    <p>{{ $domisili->agama }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Status Perkawinan</small>
+                                                    <p>{{ $domisili->status_perkawinan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Pekerjaan</small>
+                                                    <p>{{ $domisili->pekerjaan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Asal</small>
+                                                    <p>{{ $domisili->alamat_asal }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Domisili</small>
+                                                    <p>{{ $domisili->alamat_domisili }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Masa Berlaku</small>
+                                                    <p>{{ \Carbon\Carbon::parse($domisili->tanggal_berlaku)->format('d M Y') }}</p>
+                                                </div>
+                                                @elseif($domisili->jenis_domisili == 'Persyaratan')
+                                                <div class="mb-1">
+                                                    <small>Tempat, Tanggal Lahir</small>
+                                                    <p>{{ $domisili->tempat_tanggal_lahir }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Jenis Kelamin</small>
+                                                    <p>{{ $domisili->jenis_kelamin }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Agama</small>
+                                                    <p>{{ $domisili->agama }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Status Perkawinan</small>
+                                                    <p>{{ $domisili->status_perkawinan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Pekerjaan</small>
+                                                    <p>{{ $domisili->pekerjaan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Asal</small>
+                                                    <p>{{ $domisili->alamat_asal }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Domisili</small>
+                                                    <p>{{ $domisili->alamat_domisili }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Keterangan</small>
+                                                    <p>{{ $domisili->keterangan }}</p>
+                                                </div>
+                                                @elseif($domisili->jenis_domisili == 'Usaha')
+                                                <div class="mb-1">
+                                                    <small>Tempat, Tanggal Lahir</small>
+                                                    <p>{{ $domisili->tempat_tanggal_lahir }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Jenis Kelamin</small>
+                                                    <p>{{ $domisili->jenis_kelamin }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Agama</small>
+                                                    <p>{{ $domisili->agama }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Status Perkawinan</small>
+                                                    <p>{{ $domisili->status_perkawinan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Pekerjaan</small>
+                                                    <p>{{ $domisili->pekerjaan }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Asal</small>
+                                                    <p>{{ $domisili->alamat_asal }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Nama Usaha</small>
+                                                    <p>{{ $domisili->nama_usaha }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Bidang Usaha</small>
+                                                    <p>{{ $domisili->bidang_usaha }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Mulai Usaha</small>
+                                                    <p>Tahun {{ \Carbon\Carbon::parse($domisili->mulai_usaha)->format('Y') }}</p>
+                                                </div>
+                                                <div class="mb-1">
+                                                    <small>Alamat Domisili</small>
+                                                    <p>{{ $domisili->alamat_domisili }}</p>
+                                                </div>
+                                                @else
+                                                    <div class="mb-1">
+                                                        <small>Nama Tempat/Usaha</small>
+                                                        <p>{{ $domisili->nama_usaha }}</p>
+                                                    </div>
+                                                    <div class="mb-1">
+                                                        <small>Alamat Domisili</small>
+                                                        <p>{{ $domisili->alamat_domisili }}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a href="{{ route('domisili.export_pdf', $domisili->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-print"></i> Cetak Surat</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        
+                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                
-                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                            </div>
-                        </div>
                         </div>
                     @endforeach
                 </tbody>

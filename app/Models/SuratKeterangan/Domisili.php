@@ -5,7 +5,7 @@ namespace App\Models\SuratKeterangan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Berkas;
+use App\Models\User;
 
 class Domisili extends Model
 {
@@ -14,7 +14,7 @@ class Domisili extends Model
     protected $table = 'sk_domisili';
     protected $guarded = ['id'];
 
-    public function berkas(){
-        return $this->belongsTo(Berkas::class);
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','user_id'); 
     }
 }

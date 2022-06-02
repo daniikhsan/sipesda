@@ -5,8 +5,10 @@ namespace App\Http\Controllers\SuratKeterangan;
 use Barryvdh\DomPDF\Facade\PDF;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\SuratKeterangan\Domisili;
+use App\Models\Berkas;
 
 class DomisiliController extends Controller
 {
@@ -18,7 +20,11 @@ class DomisiliController extends Controller
     public function index()
     {
         $title = 'Surat Keterangan Domisili';
-        $domisili = Domisili::orderBy('created_at','desc')->get();
+        if(auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin'){
+            $domisili = Domisili::orderBy('created_at','desc')->get();
+        }else{
+            $domisili = Domisili::where('created_by',auth()->user()->id)->orderBy('created_at','desc')->get();
+        }
 
         return view('surat-keterangan.domisili.index',[
             'title' => $title,
@@ -48,6 +54,8 @@ class DomisiliController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        $berkas = null;
         $jenis_domisili = $request->jenis_domisili;
         
         if($jenis_domisili == 'Penduduk'){
@@ -99,6 +107,7 @@ class DomisiliController extends Controller
                 'alamat_domisili' => 'required',
             ]);
         }
+        
         try {
 
             $sk_domisili_terbaru = Domisili::orderBy('created_at','desc')->first();
@@ -107,16 +116,30 @@ class DomisiliController extends Controller
             }else{
                 $no_surat = $sk_domisili_terbaru->no_surat + 1;
             }
-    
+            
+            if($request->hasFile('berkas')){
+                $file = $request->file('berkas');
+                $filename = $file->getClientOriginalName();
+                $file->storeAs('public/'.$no_surat .'/',$filename);
+
+                $berkas = 'storage/'.$no_surat .'/'. $filename;
+            }
+
+            if(auth()->user()->role == 'masyarakat'){
+                $status = 'Diajukan';
+            }else{
+                $status = $request->status;
+            }
+
             $sk_domisili = Domisili::create([
                 'no_surat' => $no_surat,
-                'nik' => $request->nik ? $request->nik : null,
-                'nama' => $request->nama ? $request->nama : null,
-                'tempat_tanggal_lahir' => $request->tempat_tanggal_lahir ? $request->tempat_tanggal_lahir : null,
-                'jenis_kelamin' => $request->jenis_kelamin ? $request->jenis_kelamin : null,
-                'agama' => $request->agama ? $request->agama : null,
-                'status_perkawinan' => $request->status_perkawinan ? $request->status_perkawinan : null,
-                'pekerjaan' => $request->pekerjaan ? $request->pekerjaan : null,
+                'nik' =>  auth()->user()->role == 'masyarakat' ? auth()->user()->nik : $request->nik ? $request->nik : null,
+                'nama' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->nama : $request->nama ? $request->nama : null,
+                'tempat_tanggal_lahir' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->tempat_lahir . ', ' .  auth()->user()->tanggal_lahir : $request->tempat_tanggal_lahir ? $request->tempat_tanggal_lahir : null,
+                'jenis_kelamin' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->jenis_kelamin : $request->jenis_kelamin ? $request->jenis_kelamin : null,
+                'agama' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->agama : $request->agama ? $request->agama : null,
+                'status_perkawinan' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->status_perkawinan : $request->status_perkawinan ? $request->status_perkawinan : null,
+                'pekerjaan' => auth()->user()->role == 'masyarakat' ? auth()->user()->penduduk->pekerjaan : $request->pekerjaan ? $request->pekerjaan : null,
                 'alamat_asal' => $request->alamat_asal ? $request->alamat_asal : null,
                 'alamat_domisili' => $request->alamat_domisili ? $request->alamat_domisili : null,
                 'jenis_domisili' => $request->jenis_domisili ? $request->jenis_domisili : null,
@@ -124,11 +147,13 @@ class DomisiliController extends Controller
                 'nama_usaha' => $request->nama_usaha ? $request->nama_usaha : null,
                 'bidang_usaha' => $request->bidang_usaha ? $request->bidang_usaha : null,
                 'mulai_usaha' => $request->mulai_usaha ? $request->mulai_usaha : null,
-                'status' => $request->status ? $request->status : null,
+                'status' => $status,
                 'keterangan' => $request->keterangan ? $request->keterangan : null,
                 'created_by' => auth()->user()->id,
-                'approved_by' => auth()->user()->id,
+                'approved_by' => auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin' ? auth()->user()->id : null,
+                'berkas' => $berkas
             ]);
+            // dd($sk_domisili);
             return redirect()->route('domisili.index')->with('success', 'Pengajuan Surat Keterangan Domisili telah berhasil ditambahkan.');
         } catch (\Throwable $th) {
             return redirect()->route('domisili.create')->with('error', 'Pengajuan Surat Keterangan Domisili gagal ditambahkan. '. $th->getMessage());
@@ -143,7 +168,14 @@ class DomisiliController extends Controller
      */
     public function show($id)
     {
-        //
+        $sk_domisili = Domisili::findOrFail($id);
+        $title = 'Surat Keterangan Domisili';
+
+        return view('surat-keterangan.domisili.show',[
+            'title' => $title,
+            'sk_domisili' => $sk_domisili,
+        ]);
+
     }
 
     /**
@@ -266,9 +298,17 @@ class DomisiliController extends Controller
         $domisili = Domisili::findOrFail($id);
 
         $pdf = PDF::loadView('surat-keterangan.domisili.pdf.' . strtolower($domisili->jenis_domisili),['domisili' => $domisili]);
-        // return $pdf;
     	return $pdf->stream();
-        // return view('surat-keterangan.domisili.pdf');
+    }
+
+    public function bukti_registrasi($id){
+        $domisili = Domisili::findOrFail($id);
+        if($domisili->created_by == auth()->user()->id){
+            $pdf = PDF::loadView('surat-keterangan.domisili.pdf.bukti-registrasi.' . strtolower($domisili->jenis_domisili),['domisili' => $domisili]);
+            return $pdf->stream();
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function edit_status($id){

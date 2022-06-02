@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->role == 'admin'){
+        if(auth()->user()->role == 'admin' || auth()->user()->role == 'super_admin'){
             $total_sk_domisili = [0,0,0,0,0,0,0,0,0,0,0,0];
             $total_jenis_sk_domisili = [];
             $title = 'Dashboard';
@@ -60,7 +60,9 @@ class HomeController extends Controller
 
             $label_jenis_sk_domisili = collect(array_keys($total_jenis_sk_domisili));
             $data_jenis_sk_domisili = collect(array_values($total_jenis_sk_domisili));
-            
+            // return response()->json($data_jenis_sk_domisili);
+
+
             return view('dashboard.admin',[
                 'title' => $title,
                 'total_masyarakat' => $total_masyarakat,

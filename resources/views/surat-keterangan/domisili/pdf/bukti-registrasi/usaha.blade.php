@@ -42,76 +42,74 @@
             </tr>
         </table>
         <hr style="border: 2px solid black; margin-top:0; margin-bottom: 20px;">
-        <p class="text-center" style="font-size: 18px;"><b><u>SURAT KETERANGAN DOMISILI</u></b></p>
-        <p class="text-center" style="font-size: 17px; margin-bottom: 35px;">Nomor : 470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
-
+        <p class="text-center" style="font-size: 18px;"><b><u>BUKTI REGISTRASI</u></b></p>
+        <br><br>
         
     </center>
-    <p style="font-size: 17px; text-indent:60px; text-align: justify; line-height:1.5; margin-bottom: 30px;">Yang  bertanda tangan dibawah ini Kepala Desa Girimukti Kecamatan Penajam Kabupaten Penajam Paser Utara menerangkan bahwa :</p>
     
     <center>
         <table style="font-size: 17px; text-align: justify; ">
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Nama</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">No. Surat</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
-                <td style="vertical-align:top; padding-bottom: 8px;"><b> {{ strtoupper($domisili->nama) }}</b></td>
+                <td style="vertical-align:top; padding-bottom: 8px;"><b> 470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</b></td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">NIK</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">NIK</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
-                <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->nik }}</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ strtoupper($domisili->nik) }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Tempat Tanggal Lahir</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->nama }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Tempat Tanggal Lahir</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->tempat_tanggal_lahir }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Jenis Kelamin</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Jenis Kelamin</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->jenis_kelamin }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Agama</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Agama</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->agama }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Status Perkawinan</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Status Perkawinan</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->status_perkawinan }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Alamat Asal</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Alamat Asal</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->alamat_asal }}</td>
             </tr>
             <tr>
-                <td width="250px" style="vertical-align:top; padding-bottom: 8px; text-indent:60px;">Alamat Domisili</td>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama Usaha</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->nama_usaha }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Bidang Usaha</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->bidang_usaha }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Mulai Usaha</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> Tahun {{ \Carbon\Carbon::parse($domisili->mulai_usaha)->format('Y') }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Alamat Domisili</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->alamat_domisili }}</td>
             </tr>
         </table>
     </center>
-
-    <p style="font-size: 17px; text-align: justify; line-height:1.5; margin-bottom: 0;">1.	Menerangkan bahwa nama tersebut diatas adalah benar Penduduk yang berdomisili di {{ $domisili->alamat_domisili }} yang sampai saat ini masih tetap berdomisili dan bertempat tinggal di alamat tersebut diatas;</p>
-    <p style="font-size: 17px; text-align: justify; line-height:1.5; margin-bottom: 30px; margin-top: 0;">2.	Surat Keterangan Domisili ini berlaku hingga : {{ \Carbon\Carbon::parse($domisili->tanggal_berlaku)->format('d M Y') }}</p>
-    
-    
-    <table width="100%" style="margin-right: 0px;">
-        <tr>
-            <td width="50%">
-                <p class="text-center" style="font-size: 17px; margin-bottom: 1px; ">Tanda Tangan Yang Bersangkutan,</p>
-                <br><br><br><br><br><br>    
-                <p class="text-center" style="font-size: 17px; "><b>{{ strtoupper($domisili->nama) }}</b></p>
-            </td>
-            <td width="50%" style="margin-right: 0px;">
-                <p class="text-center" style="font-size: 17px; margin-bottom: 1px; ">Girimukti, 04 Januari 2022</p>
-                <p class="text-center" style="font-size: 17px; margin-top: 1px; ">Kepala Desa Girimukti,</p>
-                <br><br><br><br><br>
-                <p class="text-center" style="font-size: 17px; "><b>HENDRO JATMIKO SORMIN, S.Si</b></p>
-            </td>
-        </tr>
-    </table>
 </body>
 </html>

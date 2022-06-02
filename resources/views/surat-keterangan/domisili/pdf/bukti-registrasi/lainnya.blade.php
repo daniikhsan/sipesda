@@ -42,24 +42,38 @@
             </tr>
         </table>
         <hr style="border: 2px solid black; margin-top:0; margin-bottom: 20px;">
-        <p class="text-center" style="font-size: 18px;"><b><u>SURAT KETERANGAN DOMISILI</u></b></p>
-        <p class="text-center" style="font-size: 17px; margin-bottom: 35px;">Nomor : 470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</p>
-
+        <p class="text-center" style="font-size: 18px;"><b><u>BUKTI REGISTRASI</u></b></p>
+        <br><br>
         
     </center>
-    <p style="font-size: 17px; text-indent:60px; text-align: justify; line-height:1.5; margin-bottom: 30px;">Yang  bertanda tangan dibawah ini Kepala Desa Girimukti Kecamatan Penajam Kabupaten Penajam Paser Utara menerangkan bahwa :</p>
     
     <center>
         <table style="font-size: 17px; text-align: justify; ">
             <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">No. Surat</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"><b> 470/{{ str_pad($domisili->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</b></td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">NIK Pemohon</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ strtoupper($domisili->nik) }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama Pemohon</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ strtoupper($domisili->nama) }}</td>
+            </tr>
+            <tr>
+                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Alamat Pemohon</td>
+                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> RT. 005 Dusun I Gunung Pasir Desa Girimukti Kecamatan
+Penajam Kabupaten Penajam Paser Utara</td>
+            </tr>
+            <tr>
                 <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama Usaha/Tempat</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
                 <td style="vertical-align:top; padding-bottom: 8px;"><b> {{ strtoupper($domisili->nama_usaha) }}</b></td>
-            </tr>
-            <tr>
-                <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama Ketua/Pemohon</td>
-                <td style="vertical-align:top; padding-bottom: 8px;">:</td>
-                <td style="vertical-align:top; padding-bottom: 8px;"> {{ strtoupper($domisili->nama) }}</td>
             </tr>
             <tr>
                 <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Alamat Domisili</td>
@@ -68,20 +82,5 @@
             </tr>
         </table>
     </center>
-    <p style="font-size: 17px; text-indent:60px; text-align: justify; line-height:1.5; margin-bottom: 30px;">Membenarkan bahwa <b>“{{ $domisili->nama_usaha }}”</b> yang tersebut di atas benar berdomisili di {{ $domisili->alamat_domisili }}. </p>
-
-    <p style="font-size: 17px; text-indent:60px; text-align: justify; line-height:1.5; margin-bottom: 30px;">Demikian  Surat Keterangan  ini  dibuat dengan sebenarnya  untuk dapat  dipergunakan sebagaimana mestinya.</p>
-    
-    <table width="100%" style="margin-right: 0px;">
-        <tr>
-            <td width="50%"></td>
-            <td width="50%" style="margin-right: 0px;">
-                <p class="text-center" style="font-size: 17px; margin-bottom: 1px; ">Girimukti, 04 Januari 2022</p>
-                <p class="text-center" style="font-size: 17px; margin-top: 1px; ">Kepala Desa Girimukti,</p>
-                <br><br><br><br><br>
-                <p class="text-center" style="font-size: 17px; "><b>HENDRO JATMIKO SORMIN, S.Si</b></p>
-            </td>
-        </tr>
-    </table>
 </body>
 </html>
