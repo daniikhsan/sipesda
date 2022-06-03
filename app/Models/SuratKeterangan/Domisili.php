@@ -15,6 +15,6 @@ class Domisili extends Model
     protected $guarded = ['id'];
 
     public function user(){
-        return $this->belongsTo(User::class,'user_id','user_id'); 
+        return $this->belongsTo(User::class,'created_by'); 
     }
 }

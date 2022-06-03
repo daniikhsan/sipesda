@@ -52,6 +52,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ Route::is('masyarakat.index') ? 'active' : '' }}" href="{{ route('masyarakat.index') }}">List Masyarakat</a>
                     <a class="collapse-item {{ Route::is('masyarakat.create') ? 'active' : '' }}" href="{{ route('masyarakat.create') }}">Tambah Masyarakat</a>
+                    <a class="collapse-item {{ Route::is('masyarakat.aktivasi.list') ? 'active' : '' }}" href="{{ route('masyarakat.aktivasi.list') }}">Aktivasi Masyarakat</a>
                 </div>
             </div>
         </li>

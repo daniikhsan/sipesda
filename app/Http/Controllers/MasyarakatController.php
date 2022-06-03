@@ -164,4 +164,27 @@ class MasyarakatController extends Controller
 
         return redirect()->route('masyarakat.index')->with('success', 'Masyarakat telah berhasil dihapus.');
     }
+    
+
+    public function activate($id){
+        $user = User::findOrFail($id);
+        $user->is_active = $user->is_active == 1 ? 0 : 1;
+        $user->update(); 
+
+        if($user->is_active == 1){
+            return redirect()->back()->with('success', 'Masyarakat telah berhasil diaktifkan.');
+        }else{
+            return redirect()->back()->with('success', 'Masyarakat telah berhasil dinonaktifkan.');
+        }
+    }
+
+    public function activate_list(){
+        $title = 'Masyarakat';
+        $masyarakat = User::where('role','masyarakat')->where('is_active',0)->get(); 
+
+        return view('masyarakat.activate', [
+            'masyarakat' => $masyarakat,
+            'title' => $title,
+        ]);
+    }
 }

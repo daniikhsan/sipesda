@@ -67,8 +67,7 @@
             <tr>
                 <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Alamat Pemohon</td>
                 <td style="vertical-align:top; padding-bottom: 8px;">:</td>
-                <td style="vertical-align:top; padding-bottom: 8px;"> RT. 005 Dusun I Gunung Pasir Desa Girimukti Kecamatan
-Penajam Kabupaten Penajam Paser Utara</td>
+                <td style="vertical-align:top; padding-bottom: 8px;"> {{ $domisili->user->penduduk->alamat }}</td>
             </tr>
             <tr>
                 <td width="200px" style="vertical-align:top; padding-bottom: 8px;">Nama Usaha/Tempat</td>

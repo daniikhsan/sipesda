@@ -33,7 +33,7 @@
 <!-- DataTales masyarakat -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List masyarakat</h6>
+        <h6 class="m-0 font-weight-bold text-primary">List Masyarakat</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -82,15 +82,20 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModal-{{ $masyarakat->id }}Label">{{ $masyarakat->penduduk->nama }}</h5>
+                                    <h5 class="modal-title" id="exampleModal-{{ $masyarakat->id }}Label">{{ $masyarakat->penduduk->nama }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 text-center">
                                         <img src="{{ asset('template/img/user.png') }}" alt="" width="100%">
+                                        @if($masyarakat->is_active == 0)
+                                            <a href="{{ route('masyarakat.aktivasi', $masyarakat->id) }}" class="btn btn-success btn-sm mr-3"><i class="fas fa-check"></i> Aktifkan</a>
+                                        @else 
+                                            <a href="{{ route('masyarakat.aktivasi', $masyarakat->id) }}" class="btn btn-danger btn-sm mr-3"><i class="fas fa-times"></i> Non-Aktifkan</a>
+                                        @endif
                                     </div>
                                     <div class="col-md-8">
                                         <div class="mb-1">

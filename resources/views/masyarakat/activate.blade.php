@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-md-8">
         <h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
-        <p>Halaman untuk mengolah data Admin</p>
+        <p>Halaman untuk melakukan aktivasi akun masyarakat</p>
     </div>
-    <div class="col-md-4">
-        <a href="{{ route('admin.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-plus fa-sm text-white-50"></i> Tambah Admin</a>
-    </div>
+    <!-- <div class="col-md-4">
+        <a href="{{ route('masyarakat.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-plus fa-sm text-white-50"></i> Tambah Masyarakat</a>
+    </div> -->
 </div>
 
 @if(Session::get('success'))
@@ -30,10 +30,10 @@
     </div>
 @endif
 
-<!-- DataTales Admin -->
+<!-- DataTales masyarakat -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List Admin</h6>
+        <h6 class="m-0 font-weight-bold text-primary">List Masyarakat</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -41,7 +41,7 @@
                 <thead>
                     <tr class="text-center">
                         <th width="15px">No</th>
-                        <th>NIP</th>
+                        <th>NIK</th>
                         <th>Nama</th>
                         <th>Posisi</th>
                         <th>Aksi</th>
@@ -50,101 +50,91 @@
                 <tfoot>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>NIP</th>
+                        <th>NIK</th>
                         <th>Nama</th>
                         <th>Posisi</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach($admins as $admin)
+                    @foreach($masyarakat as $masyarakat)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $admin->nip ? $admin->nip : '-' }}</td>
-                            <td>{{ $admin->penduduk->nama }}</td>
-                            <td class="text-center">{{ $admin->jabatan_perangkat_desa ? $admin->jabatan_perangkat_desa : '-' }}</td>
+                            <td class="text-center">{{ $masyarakat->nik ? $masyarakat->nik : '-' }}</td>
+                            <td>{{ $masyarakat->penduduk->nama }}</td>
+                            <td class="text-center">{{ $masyarakat->jabatan_perangkat_desa ? $masyarakat->jabatan_perangkat_desa : '-' }}</td>
                             <td class="text-center" width="300px">
                                 <div class="btn btn-toolbar justify-content-center">
-                                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $admin->id }}">
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $masyarakat->id }}">
                                         <i class="fas fa-eye"></i> Detail
                                     </button>
-                                    <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-primary btn-sm mr-2"><i class="fas fa-pen"></i> Edit</a>
-                                    <form action="{{ route('admin.destroy', $admin->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm " {{ $admin->id == auth()->user()->id ? 'disabled' : $admin->role == 'super_admin' ? 'disabled' : '' }}><i class="fas fa-trash"></i> Delete</button>
-                                    </form>
+                                    <a href="{{ route('masyarakat.aktivasi', $masyarakat->id) }}" class="btn btn-success btn-sm mr-3"><i class="fas fa-check"></i> Aktifkan</a>
                                 </div>
                             </td>
                         </tr>
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal-{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModal-{{ $admin->id }}Label" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal-{{ $masyarakat->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModal-{{ $masyarakat->id }}Label" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModal-{{ $admin->id }}Label">{{ $admin->penduduk->nama }}</h5>
+                                    <h5 class="modal-title" id="exampleModal-{{ $masyarakat->id }}Label">{{ $masyarakat->penduduk->nama }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 text-center">
                                         <img src="{{ asset('template/img/user.png') }}" alt="" width="100%">
-                                        @if($admin->is_active == 0)
-                                            <a href="{{ route('admin.aktivasi', $admin->id) }}" class="btn btn-success btn-sm mr-3"><i class="fas fa-check"></i> Aktifkan</a>
-                                        @else 
-                                            <a href="{{ route('admin.aktivasi', $admin->id) }}" class="btn btn-danger btn-sm mr-3"><i class="fas fa-times"></i> Non-Aktifkan</a>
-                                        @endif
                                     </div>
                                     <div class="col-md-8">
                                         <div class="mb-1">
                                             <small>NIK</small>
-                                            <p>{{ $admin->nik }}</p>
+                                            <p>{{ $masyarakat->nik }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>NIP</small>
-                                            <p>{{ $admin->nip ? $admin->nip : '-' }}</p>
+                                            <p>{{ $masyarakat->nip ? $masyarakat->nip : '-' }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Nama</small>
-                                            <p>{{ $admin->penduduk->nama }}</p>
+                                            <p>{{ $masyarakat->penduduk->nama }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Jenis Kelamin</small>
-                                            <p>{{ $admin->penduduk->jenis_kelamin }}</p>
+                                            <p>{{ $masyarakat->penduduk->jenis_kelamin }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Tempat Tanggal Lahir</small>
-                                            <p>{{ $admin->penduduk->tempat_lahir }}, {{ \Carbon\Carbon::parse($admin->penduduk->tanggal_lahir)->format('d M Y') }}</p>
+                                            <p>{{ $masyarakat->penduduk->tempat_lahir }}, {{ \Carbon\Carbon::parse($masyarakat->penduduk->tanggal_lahir)->format('d M Y') }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Status Perkawinan</small>
-                                            <p>{{ $admin->penduduk->status_perkawinan }}</p>
+                                            <p>{{ $masyarakat->penduduk->status_perkawinan }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Pendidikan</small>
-                                            <p>{{ $admin->penduduk->pendidikan }}</p>
+                                            <p>{{ $masyarakat->penduduk->pendidikan }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Alamat</small>
-                                            <p>{{ $admin->penduduk->alamat }}</p>
+                                            <p>{{ $masyarakat->penduduk->alamat }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Agama</small>
-                                            <p>{{ $admin->penduduk->agama ? $admin->penduduk->agama : '-' }}</p>
+                                            <p>{{ $masyarakat->penduduk->agama ? $masyarakat->penduduk->agama : '-' }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Pekerjaan</small>
-                                            <p>{{ $admin->penduduk->pekerjaan }}</p>
+                                            <p>{{ $masyarakat->penduduk->pekerjaan }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Role</small>
-                                            <p>{{ Str::title(str_replace('_',' ',$admin->role))  }}</p>
+                                            <p>{{ Str::title(str_replace('_',' ',$masyarakat->role))  }}</p>
                                         </div>
                                         <div class="mb-1">
                                             <small>Posisi</small>
-                                            <p>{{ $admin->jabatan_perangkat_desa ? $admin->jabatan_perangkat_desa : '-' }}</p>
+                                            <p>{{ $masyarakat->jabatan_perangkat_desa ? $masyarakat->jabatan_perangkat_desa : '-' }}</p>
                                         </div>
                                     </div>
                                 </div>

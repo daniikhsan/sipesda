@@ -29,7 +29,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('admin', App\Http\Controllers\AdminController::class);
+    Route::get('admin/{id}/aktivasi', [App\Http\Controllers\AdminController::class, 'activate'])->name('admin.aktivasi');
     Route::resource('masyarakat', App\Http\Controllers\MasyarakatController::class);
+    Route::get('masyarakat/{id}/aktivasi', [App\Http\Controllers\MasyarakatController::class, 'activate'])->name('masyarakat.aktivasi');
+    Route::get('masyarakat/aktivasi/list', [App\Http\Controllers\MasyarakatController::class, 'activate_list'])->name('masyarakat.aktivasi.list');
+    
     Route::prefix('surat-keterangan')->group(function () {
         Route::resource('domisili', App\Http\Controllers\SuratKeterangan\DomisiliController::class);
         Route::get('domisili/{id}/pdf', [App\Http\Controllers\SuratKeterangan\DomisiliController::class, 'export_pdf'])->name('domisili.export_pdf');

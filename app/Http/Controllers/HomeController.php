@@ -75,7 +75,18 @@ class HomeController extends Controller
             ]);
         }else{
             $title = 'Dashboard';
-            return view('home',compact('title'));
+            $sk_domisili = Domisili::where('created_by', auth()->user()->id)->get();
+            $sk_domisili_pengajuan = Domisili::where('created_by', auth()->user()->id)->where('status','Diajukan')->get();
+            $sk_domisili_proses = Domisili::where('created_by', auth()->user()->id)->where('status','Diproses')->get();
+            $sk_domisili_tolak = Domisili::where('created_by', auth()->user()->id)->where('status','Ditolak')->get();
+
+            return view('home',[
+                'title' => $title,
+                'sk_domisili' => $sk_domisili,
+                'sk_domisili_pengajuan' => $sk_domisili_pengajuan,
+                'sk_domisili_proses' => $sk_domisili_proses,
+                'sk_domisili_tolak' => $sk_domisili_tolak,
+            ]);
         }
     }
 

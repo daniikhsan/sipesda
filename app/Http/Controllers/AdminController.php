@@ -168,4 +168,16 @@ class AdminController extends Controller
 
         return redirect()->route('admin.index')->with('success', 'Admin telah berhasil dihapus.');
     }
+
+    public function activate($id){
+        $user = User::findOrFail($id);
+        $user->is_active = $user->is_active == 1 ? 0 : 1;
+        $user->update(); 
+
+        if($user->is_active == 1){
+            return redirect()->back()->with('success', 'Admin telah berhasil diaktifkan.');
+        }else{
+            return redirect()->back()->with('success', 'Admin telah berhasil dinonaktifkan.');
+        }
+    }
 }

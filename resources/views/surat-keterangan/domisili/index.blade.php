@@ -80,12 +80,11 @@
                             <td class="text-center">{{ \Carbon\Carbon::parse($domisili->created_at)->format('d M Y H:i:s') }}</td>
                             <td class="text-center" @if(auth()->user()->role != 'masyarakat') width="400px" @else width="300px" @endif>
                                 <div class="btn btn-toolbar justify-content-center">
+                                @if(auth()->user()->role == 'masyarakat')
                                 <a href="{{ url($domisili->berkas) }}" class="btn btn-sm btn-secondary  mr-2"><i class="fas fa-download"></i> Berkas</a>    
-                                <a href="{{ route('domisili.bukti_registrasi', $domisili->id) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Bukti Registrasi</a>    
+                                <a href="{{ route('domisili.bukti_registrasi', $domisili->id) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Bukti Registrasi</a>  
+                                @endif  
                                 @if(auth()->user()->role != 'masyarakat')
-                                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
-                                        <i class="fas fa-eye"></i> Detail
-                                    </button><br>
                                     <a href="{{ route('domisili.edit_status', $domisili->id) }}" class="btn btn-success btn-sm mr-2 {{ $domisili->status == 'Selesai' || $domisili->status == 'Dibatalkan'  ? 'disabled' : '' }}"><i class="fas fa-redo"></i> Update Status</a>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal-{{ $domisili->id }}">
                                         <i class="fas fa-eye"></i> Detail

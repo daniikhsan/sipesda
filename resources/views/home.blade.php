@@ -9,23 +9,6 @@
 
 <!-- Content Row -->
 <div class="row">
-    <!-- Masyarakat Terdaftar Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Masyarakat Terdaftar</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Pengajuan Surat Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -35,7 +18,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Pengajuan SK Domisili</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($sk_domisili) }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-paste fa-2x text-gray-300"></i>
@@ -52,8 +35,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            SK Domisili (Pengajuan)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                            SK Domisili (Diajukan)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($sk_domisili_pengajuan) }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-sticky-note fa-2x text-gray-300"></i>
@@ -71,10 +54,28 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             SK Domisili (Proses)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($sk_domisili_proses) }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-paper-plane fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Surat dalam Proses Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            SK Domisili (Ditolak)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($sk_domisili_tolak) }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-times fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -86,50 +87,85 @@
 <!-- Content Row -->
 
 <div class="row">
+    
     <!-- Area Chart -->
-    <div class="col-xl-8 col-lg-7">
+    <div class="col-xl-4 col-lg-7">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Pengajuan SK Domisili {{ date('Y') }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary mx-auto"><a href="{{ route('domisili.index') }}">Surat dalam Pengajuan</a> </h6>
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                </div>
+            <div class="card-body" style="padding-top:13px;">
+                <table width="100%" class="">
+                    @if(count($sk_domisili_pengajuan) == 0)
+                        <p class="text-center">Tidak ada data.</p>
+                    @endif
+                    @foreach($sk_domisili_pengajuan as $surat)
+                        <tr>
+                            <td width="5%">{{ $loop->iteration }}.</td>
+                            <td width="55%"> 470/{{ str_pad($surat->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</td>
+                            <td width="40%"><a href="{{ route('domisili.bukti_registrasi', $surat->id) }}">Bukti Registrasi</a></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Area Chart -->
+    <div class="col-xl-4 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary mx-auto"><a href="{{ route('domisili.index') }}">Surat dalam Proses</a></h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="padding-top:13px;">
+                <table width="100%" class="">
+                    @if(count($sk_domisili_proses) == 0)
+                        <p class="text-center">Tidak ada data.</p>
+                    @endif
+                    @foreach($sk_domisili_proses as $surat)
+                        <tr>
+                            <td width="5%">{{ $loop->iteration }}.</td>
+                            <td width="55%"> 470/{{ str_pad($surat->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</td>
+                            <td width="40%"><a href="{{ route('domisili.bukti_registrasi', $surat->id) }}">Bukti Registrasi</a></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Area Chart -->
+    <div class="col-xl-4 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary mx-auto"><a href="{{ route('domisili.index') }}">Surat Ditolak</a></h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="padding-top:13px;">
+                <table width="100%" class="">
+                    @if(count($sk_domisili_tolak) == 0)
+                        <p class="text-center">Tidak ada data.</p>
+                    @endif
+                    @foreach($sk_domisili_tolak as $surat)
+                        <tr>
+                            <td width="5%">{{ $loop->iteration }}.</td>
+                            <td width="55%"> 470/{{ str_pad($surat->no_surat, 3, 0, STR_PAD_LEFT) }}/Pem-DG</td>
+                            <td width="40%"><a href="{{ route('domisili.bukti_registrasi', $surat->id) }}">Bukti Registrasi</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Jenis Pelayanan SK Domisili {{ date('Y') }}</h6>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                </div>
-                <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
