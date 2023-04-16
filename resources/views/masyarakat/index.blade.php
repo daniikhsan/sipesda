@@ -72,7 +72,7 @@
                                     <form action="{{ route('masyarakat.destroy', $masyarakat->id) }}" method="post" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm " {{ $masyarakat->id == auth()->user()->id ? 'disabled' : $masyarakat->role == 'super_admin' || $masyarakat->role == 'admin' ? 'disabled' : '' }}><i class="fas fa-trash"></i> Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm " {{ $masyarakat->id == auth()->user()->id ? 'disabled' : (($masyarakat->role == 'super_admin' || $masyarakat->role == 'admin') ? 'disabled' : '') }}><i class="fas fa-trash"></i> Delete</button>
                                     </form>
                                 </div>
                             </td>
